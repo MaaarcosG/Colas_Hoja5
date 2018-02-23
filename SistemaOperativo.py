@@ -14,6 +14,10 @@ capacidad_Proceso = 2
 memRequerida = random.randint(1,10)
 #----Procesos READY----#
 cantidadInstrucciones = random.randint(1,10)
+#--TRUE = terminado---# #--False = no ha terminado--#	
+terminado = true
+#Primer Tiempo
+time = 0
 
 
 class SistemOperativo(object):
