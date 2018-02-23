@@ -9,4 +9,4 @@ from random import uniform, Random
 #Cantidad del RAM del sistema Operativo
 cantidadRAM = 100  
 #Numero de proceso que se realizaran
-numProceso = 200
+numProceso = 0
