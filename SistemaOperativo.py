@@ -8,10 +8,6 @@ import random
 # Descripcion: Simulacion de tiempo de corrida de un sistema operativo
 # Fecha: 23 de febrero 2018
 
-
-
-#from random import uniform, Random 
-
 #Semilla
 random.seed(20)
 #Cantidad del RAM del sistema Operativo
@@ -33,15 +29,15 @@ time = 0
 #Tiempo Final
 tiempoTotal = 0
 
+
 # Clase principal
-class Main:
+class Main(object):
     def __init__(self):#Se inicializa
         env = simpy.Environment()  # Crea un ambiente y lo llama env
         sistema_operativo = SistemaOperativo(env)  # crea la clase sistema operativo (recursos)
         env.process(proceso_generator(env, sistema_operativo))  # Crear procesos
         env.run()
-Main()
-
+        
 # Generador de procesos
 def generador_procesos(env, sistema_operativo):
     for i in range(cantidad_procesos):#Hace una cantidad de procesos que esta definido por cantidad_procesos
@@ -50,13 +46,12 @@ def generador_procesos(env, sistema_operativo):
         yield env.timeout(tiempo_creacion)  #Tiempo en el que se tarda en aparacer cada proceso 
 
 class Proceso(self, nombre, numero, env, sistema_operativo):
-
         #Atributos de la clase
         self.env = env
         self.finalizado = False#Indica si el proceso no tiene instrucciones por realizar, en la hoja de trabajo la nombran como terminated
         self.nombre = nombre#Nombre del proceso
         self.cantidadInstrucciones = random.randint(1,10)#Cantidad de instrucciones por realizar
-        self.memRequerida = random.randint(1,10) = random.randint(1, 10)#Cantidad de memoria RAM que necesita para realizar este proceso
+        self.memRequerida = random.randint(1,10) #= random.randint(1, 10)#Cantidad de memoria RAM que necesita para realizar este proceso
         self.tiempo_creacion = 0 #Tiempo en el que se creo
         self.tiempo_terminado = 0 # Tiempo en el termino
         self.tiempo_total = 0 #Tiempo total que le tomo de crearse a terminarse
