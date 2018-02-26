@@ -18,22 +18,20 @@ random.seed(20)
 cantidadRAM = 100
 #Intrucciones a realizar por unidad de tiempo
 cantidad_intrucciones = 3
-#Tiempo de operación I/O
+#Tiempo de operaci? I/O
 tiempoOperacion = 5
 #Lista con los tiempos almacenados
 tiemposDeProcesos = []
 #Numero de proceso que se ejecutaran a la vez
 capacidad_Proceso = 1
-#Intervalo entre creación de procesos
+#Intervalo entre creaci? de procesos
 intervalo = 10
 #Cantidad de procesos a realizar
 cantidad_procesos = 25
 #Primer Tiempo
 time = 0
-<<<<<<< HEAD
 #Tiempo Final
 tiempoTotal = 0
-=======
 
 # Clase principal
 class Main:
@@ -42,12 +40,12 @@ class Main:
         sistema_operativo = SistemaOperativo(env)  # crea la clase sistema operativo (recursos)
         env.process(proceso_generator(env, sistema_operativo))  # Crear procesos
         env.run()
-
+Main()
 
 # Generador de procesos
 def generador_procesos(env, sistema_operativo):
     for i in range(cantidad_procesos):#Hace una cantidad de procesos que esta definido por cantidad_procesos
-        tiempo_creacion = random.expovariate(1.0/Interval)#Distribución exponencial que sigue la creación de procesos
+        tiempo_creacion = random.expovariate(1.0/Interval)#Distribuci? exponencial que sigue la creaci? de procesos
         Proceso('Proceso %d' % i, i, env, sistema_operativo)#Le pasa los valores a la clase proceso
         yield env.timeout(tiempo_creacion)  #Tiempo en el que se tarda en aparacer cada proceso 
 
@@ -62,7 +60,7 @@ class Proceso(self, nombre, numero, env, sistema_operativo):
         self.tiempo_creacion = 0 #Tiempo en el que se creo
         self.tiempo_terminado = 0 # Tiempo en el termino
         self.tiempo_total = 0 #Tiempo total que le tomo de crearse a terminarse
-        self.numero = numero #Indice/número del proceso
+        self.numero = numero #Indice/n?mero del proceso
         self.sistema_operativo = sistema_operativo
         self.proceso = env.process(self.realizar(env, sistema_operativo))
 
@@ -85,7 +83,7 @@ class Proceso(self, nombre, numero, env, sistema_operativo):
                                         #Cuando finalmente entra a la CPU realiza estas instrucciones
                                         print('El proceso %s: obtiene CPU en %d. Status: Running.' % (self.nombre, env.now))
                                         for i in range(cantidad_intrucciones):  # Realizar operaciones por ciclo
-                                                if self.cantidadInstrucciones > 0: #Si el proceso aun tiene instrucciones por realizar, reduce uno el número de instrucciones faltantes.
+                                                if self.cantidadInstrucciones > 0: #Si el proceso aun tiene instrucciones por realizar, reduce uno el n?mero de instrucciones faltantes.
                                                     self.cantidadInstrucciones -= 1  
                                                     siguiente_paso = random.randint(1, 2)  # Para definir su siguiente paso
                                                 yield env.timeout(1)  #Como se modelo segun la hoja de trabajo, debe esperar una unidad de tiempo entre cada instruccion 
@@ -102,14 +100,9 @@ class Proceso(self, nombre, numero, env, sistema_operativo):
                         self.tiempo_terminado = fin  #Guarda el tiempo final 
                         self.tiempo_total = int(self.tiempo_terminado - self.tiempo_creacion)  #Tiempo total que tomo el proceso llevarse a cabo
                         tiemposDeProcesos.insert(self.numero, self.tiempo_total)#Agregar el indice con su tiempo total respectivo a la lista
-
-       
->>>>>>> 7dae1eabe7eca3eaf26a463383be6baa57573b20
-
 class SistemOperativo(object):
 	def _init_(self,env):
 		#Creamos el espacio donde se guardara
-<<<<<<< HEAD
 		self.RAM = simpy.Container(env, init=cantidadRAM, capacidad=capacidad_Proceso)
 		self.CPU = simpy.Resource(env, capacidad=capacidad_Proceso)
 
@@ -121,11 +114,7 @@ class Process:
 		self.cantidadInstrucciones = cantidadInstrucciones
 		self.terminado = terminado
 		self.tiempoTotal = tiempoTotal
-=======
 		self.RAM = simpy.Container(env, init=cantidadRAM, capacidad=capacidad_Proceso)  #Container
 		self.CPU = simpy.Resource(env, capacidad=capacidad_Proceso)     #Resource
-
->>>>>>> 7dae1eabe7eca3eaf26a463383be6baa57573b20
-
 
 
