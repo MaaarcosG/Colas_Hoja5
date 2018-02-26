@@ -45,7 +45,8 @@ def generador_procesos(env, sistema_operativo):
         Proceso('Proceso %d' % i, i, env, sistema_operativo)#Le pasa los valores a la clase proceso
         yield env.timeout(tiempo_creacion)  #Tiempo en el que se tarda en aparacer cada proceso 
 
-class Proceso(self, nombre, numero, env, sistema_operativo):
+class Proceso():
+    def __init__(self, nombre, numero, env, sistema_operativo):
         #Atributos de la clase
         self.env = env
         self.finalizado = False#Indica si el proceso no tiene instrucciones por realizar, en la hoja de trabajo la nombran como terminated
@@ -95,8 +96,9 @@ class Proceso(self, nombre, numero, env, sistema_operativo):
                         self.tiempo_terminado = fin  #Guarda el tiempo final 
                         self.tiempo_total = int(self.tiempo_terminado - self.tiempo_creacion)  #Tiempo total que tomo el proceso llevarse a cabo
                         tiemposDeProcesos.insert(self.numero, self.tiempo_total)#Agregar el indice con su tiempo total respectivo a la lista
-class SistemOperativo(object):
-	def _init_(self,env):
+
+class SistemaOperativo(env):
+	def __init__ (self, env):
 		#Creamos el espacio donde se guardara
 		self.RAM = simpy.Container(env, init=cantidadRAM, capacidad=capacidad_Proceso)
 		self.CPU = simpy.Resource(env, capacidad=capacidad_Proceso)
@@ -111,5 +113,7 @@ class Process:
 		self.tiempoTotal = tiempoTotal
 		self.RAM = simpy.Container(env, init=cantidadRAM, capacidad=capacidad_Proceso)  #Container
 		self.CPU = simpy.Resource(env, capacidad=capacidad_Proceso)     #Resource
+
+Main()
 
 
