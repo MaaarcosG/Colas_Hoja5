@@ -18,10 +18,23 @@ cantidadInstrucciones = random.randint(1,10)
 terminado = true
 #Primer Tiempo
 time = 0
-
+#Tiempo Final
+tiempoTotal = 0
 
 class SistemOperativo(object):
 	def _init_(self,env):
 		#Creamos el espacio donde se guardara
 		self.RAM = simpy.Container(env, init=cantidadRAM, capacidad=capacidad_Proceso)
 		self.CPU = simpy.Resource(env, capacidad=capacidad_Proceso)
+
+class Process:
+	#Constructor de la clase --Process--
+	def _init_(self, env, cantidadRAM, capacidad_Proceso, memRequerida, cantidadInstrucciones):
+		self.capacidad_Proceso = capacidad_Proceso
+		self.memRequerida = memRequerida
+		self.cantidadInstrucciones = cantidadInstrucciones
+		self.terminado = terminado
+		self.tiempoTotal = tiempoTotal
+
+
+
