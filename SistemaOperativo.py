@@ -97,9 +97,9 @@ class Proceso(self, nombre, numero, env, sistema_operativo):
                         fin = env.now
                         self.tiempo_terminado = fin  #Guarda el tiempo final 
                         self.tiempo_total = int(self.tiempo_terminado - self.tiempo_creacion)  #Tiempo total que tomo el proceso llevarse a cabo
-                        TiemposDeProcesos.insert(self.numero, self.tiempo_total)#Agregar el indice con su tiempo total respectivo a la lista
+                        tiemposDeProcesos.insert(self.numero, self.tiempo_total)#Agregar el indice con su tiempo total respectivo a la lista
 
-        
+       
 
 class SistemOperativo(object):
 	def _init_(self,env):
