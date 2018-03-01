@@ -91,7 +91,7 @@ class Main(object):
     def __init__(self):#Se inicializa
         env = simpy.Environment()  # Crea un ambiente y lo llama env
         sistema_operativo = SistemaOperativo(env)  # crea la clase sistema operativo (recursos)
-        env.Proceso(generador_procesos(env, sistema_operativo))  # Crear procesos
+        env.process(generador_procesos(env, sistema_operativo))  # Crear procesos
         env.run()
 
         # Generador de procesos
