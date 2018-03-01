@@ -28,6 +28,12 @@ cantidad_procesos = 25
 time = 0
 #Tiempo Final
 tiempoTotal = 0
+ # Generador de procesos
+ def generador_procesos(env, sistema_operativo):
+    for i in range(cantidad_procesos):#Hace una cantidad de procesos que esta definido por cantidad_procesos
+        tiempo_creacion = random.expovariate(1.0/intervalo)#Distribuci? exponencial que sigue la creaci? de procesos
+        Proceso('Proceso %d' % i, i, env, sistema_operativo)#Le pasa los valores a la clase proceso
+        yield env.timeout(tiempo_creacion)  #Tiempo en el que se tarda en aparacer cada proceso
 
 class Proceso():
     def __init__(self, nombre, numero, env, sistema_operativo):
@@ -86,20 +92,16 @@ class SistemaOperativo:
 		#Creamos el espacio donde se guardara
 		self.RAM = simpy.Container(env, init=capacidad_Proceso, capacity=cantidadRAM)
 		self.CPU = simpy.Resource(env, capacity=capacidad_Proceso)
+		
 
 class Main(object):     
     def __init__(self):#Se inicializa
         env = simpy.Environment()  # Crea un ambiente y lo llama env
         sistema_operativo = SistemaOperativo(env)  # crea la clase sistema operativo (recursos)
-        env.Proceso(generador_procesos(env, sistema_operativo))  # Crear procesos
+        env.process(generador_procesos(env, sistema_operativo))  # Crear procesos
         env.run()
 
-        # Generador de procesos
-    def generador_procesos(env, sistema_operativo):
-         for i in range(cantidad_procesos):#Hace una cantidad de procesos que esta definido por cantidad_procesos
-            tiempo_creacion = random.expovariate(1.0/intervalo)#Distribuci? exponencial que sigue la creaci? de procesos
-            Proceso('Proceso %d' % i, i, env, sistema_operativo)#Le pasa los valores a la clase proceso
-            yield env.timeout(tiempo_creacion)  #Tiempo en el que se tarda en aparacer cada proceso
+       
 Main()
 
 
