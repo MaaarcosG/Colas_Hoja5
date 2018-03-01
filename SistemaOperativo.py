@@ -10,7 +10,7 @@ import math
 # Fecha: 23 de febrero 2018
 
 #Semilla
-random.seed(24)
+random.seed(10)
 #Cantidad del RAM del sistema Operativo
 cantidadRAM = 100
 #Intrucciones a realizar por unidad de tiempo
@@ -18,13 +18,13 @@ cantidad_instrucciones = 3
 #Tiempo de operaci? I/O
 tiempoOperacion = 5
 #Lista con los tiempos almacenados
-tiemposDeProcesos = []
+tiemposProcesos = []
 #Numero de proceso que se ejecutaran a la vez
 capacidad_Proceso = 2
 #Intervalo entre creaci? de procesos
 intervalo = 10
 #Cantidad de procesos a realizar
-cantidad_procesos = 200
+cantidad_procesos = 25
 
 
 class SistemaOperativo:
@@ -85,7 +85,7 @@ class Proceso:
     	fin = env.now # Liberar RAM
     	self.tiempo_terminado = fin #Guarda el tiempo final
     	self.tiempo_total = int(self.tiempo_terminado - self.tiempo_creacion) #Tiempo total que tomo el proceso llevarse a cabo
-    	tiemposDeProcesos.insert(self.numero, self.tiempo_total) #Agregar el indice con su tiempo total respectivo a la lista
+    	tiemposProcesos.insert(self.numero, self.tiempo_total) #Agregar el indice con su tiempo total respectivo a la lista
 
 #Metodo de Generado de Procesos
 def generador_procesos(env, sistema_operativo,i):
@@ -94,6 +94,12 @@ def generador_procesos(env, sistema_operativo,i):
  	tiempo_creacion = random.expovariate(1.0/intervalo)#Distribuci? exponencial que sigue la creaci? de procesos
  	Proceso('Proceso %d' % i, i, env, sistema_operativo)
     	yield env.timeout(tiempo_creacion)  #Tiempo en el que se tarda en aparacer cada proceso
+
+ #Metodo para generar 
+def logFile(filePath, string):
+    file = open(filePath, "a")
+    file.write(string+ "\n")
+    file.close()
     
 class Main(object):     
     def __init__(self):#Se inicializa
@@ -101,7 +107,26 @@ class Main(object):
         sistema_operativo = SistemaOperativo(env)  # crea la clase sistema operativo (recursos)
         for i in range (cantidad_procesos):
         	env.process(generador_procesos(env, sistema_operativo,i))  # Crear procesos
+        	#logFile("log.csv",)
         env.run()       
+
+        #calculando datos estadisticos promedio
+        def estadisticaPromedio(s):
+        	promedio = 0
+        	promedio = sum(s) * 1.0/len(s)
+        	return promedio
+
+        #Pone los valores de cada uno en los atributos
+        tiempoTotalPromedio = estadisticaPromedio(tiemposProcesos)
+        varianza = map(lambda x: (x - tiempoTotalPromedio) ** 2, tiemposProcesos)
+        tiempoDesviacionEstanda = math.sqrt(estadisticaPromedio(varianza))
+
+        print "El tiempo Promedio es de: ", tiempoTotalPromedio
+        print "La desviacion estandar es: ", tiempoDesviacionEstanda
+
+
+
+
 Main()
 
 
