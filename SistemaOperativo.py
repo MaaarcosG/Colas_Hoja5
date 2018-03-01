@@ -29,22 +29,6 @@ time = 0
 #Tiempo Final
 tiempoTotal = 0
 
-
-# Clase principal
-class Main(object):
-    def __init__(self):#Se inicializa
-        env = simpy.Environment()  # Crea un ambiente y lo llama env
-        sistema_operativo = SistemaOperativo(env)  # crea la clase sistema operativo (recursos)
-        env.process(proceso_generator(env, sistema_operativo))  # Crear procesos
-        env.run()
-        
-# Generador de procesos
-def generador_procesos(env, sistema_operativo):
-    for i in range(cantidad_procesos):#Hace una cantidad de procesos que esta definido por cantidad_procesos
-        tiempo_creacion = random.expovariate(1.0/Interval)#Distribuci? exponencial que sigue la creaci? de procesos
-        Proceso('Proceso %d' % i, i, env, sistema_operativo)#Le pasa los valores a la clase proceso
-        yield env.timeout(tiempo_creacion)  #Tiempo en el que se tarda en aparacer cada proceso 
-
 class Proceso():
     def __init__(self, nombre, numero, env, sistema_operativo):
         #Atributos de la clase
@@ -72,7 +56,7 @@ class Proceso():
                         print('El proceso %s: obtiene RAm en %d. Status: Waiting.' % (self.nombre, env.now))#Imprime el momento en el que el proceso entra al estado waiting
                         siguiente = 0  #Esta variable nos indica que hacer luego de pasar el estado running
                         
-                        while not self.finalizado:      #Realiza estas instrucciones hasta que el estado del proceso terminated sea true
+                        while not self.finalizado:      #Realiza estas instrucciones hasta que el estado del proceso terminated sea truex|x
                                 with sistema_operativo.CPU.request() as req:  # Pide CPU (resource)
                                         print('El proceso %s: ha solicitado al CPU en %d. Status: Waiting.' % (self.nombre, env.now))
                                         yield req
@@ -97,23 +81,25 @@ class Proceso():
                         self.tiempo_total = int(self.tiempo_terminado - self.tiempo_creacion)  #Tiempo total que tomo el proceso llevarse a cabo
                         tiemposDeProcesos.insert(self.numero, self.tiempo_total)#Agregar el indice con su tiempo total respectivo a la lista
 
-class SistemaOperativo(env):
+class SistemaOperativo:
 	def __init__ (self, env):
 		#Creamos el espacio donde se guardara
-		self.RAM = simpy.Container(env, init=cantidadRAM, capacidad=capacidad_Proceso)
-		self.CPU = simpy.Resource(env, capacidad=capacidad_Proceso)
+		self.RAM = simpy.Container(env, init=capacidad_Proceso, capacity=cantidadRAM)
+		self.CPU = simpy.Resource(env, capacity=capacidad_Proceso)
 
-class Process:
-	#Constructor de la clase --Process--
-	def _init_(self, env, cantidadRAM, capacidad_Proceso, memRequerida, cantidadInstrucciones):
-		self.capacidad_Proceso = capacidad_Proceso
-		self.memRequerida = memRequerida
-		self.cantidadInstrucciones = cantidadInstrucciones
-		self.terminado = terminado
-		self.tiempoTotal = tiempoTotal
-		self.RAM = simpy.Container(env, init=cantidadRAM, capacidad=capacidad_Proceso)  #Container
-		self.CPU = simpy.Resource(env, capacidad=capacidad_Proceso)     #Resource
+class Main(object):     
+    def __init__(self):#Se inicializa
+        env = simpy.Environment()  # Crea un ambiente y lo llama env
+        sistema_operativo = SistemaOperativo(env)  # crea la clase sistema operativo (recursos)
+        env.Proceso(generador_procesos(env, sistema_operativo))  # Crear procesos
+        env.run()
 
+        # Generador de procesos
+    def generador_procesos(env, sistema_operativo):
+         for i in range(cantidad_procesos):#Hace una cantidad de procesos que esta definido por cantidad_procesos
+            tiempo_creacion = random.expovariate(1.0/intervalo)#Distribuci? exponencial que sigue la creaci? de procesos
+            Proceso('Proceso %d' % i, i, env, sistema_operativo)#Le pasa los valores a la clase proceso
+            yield env.timeout(tiempo_creacion)  #Tiempo en el que se tarda en aparacer cada proceso
 Main()
 
 
