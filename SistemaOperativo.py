@@ -29,11 +29,15 @@ time = 0
 #Tiempo Final
 tiempoTotal = 0
 
+<<<<<<< HEAD
 def generador_procesos(env, sistema_operativo):
  		for i in range(cantidad_procesos):#Hace una cantidad de procesos que esta definido por cantidad_procesos
         tiempo_creacion = random.expovariate(1.0/intervalo)#Distribuci? exponencial que sigue la creaci? de procesos
         Proceso('Proceso %d' % i, i, env, sistema_operativo)#Le pasa los valores a la clase proceso
        	yield env.timeout(tiempo_creacion)  #Tiempo en el que se tarda en aparacer cada proceso
+=======
+ 
+>>>>>>> e80cbbd5fb4d563f125133fd5a1f3aa3ee4e79c4
 
 class Proceso():
     def __init__(self, nombre, numero, env, sistema_operativo):
@@ -101,6 +105,11 @@ class Main(object):
         env.process(generador_procesos(env, sistema_operativo))  # Crear procesos
         env.run()
 
+def generador_procesos(env, sistema_operativo):
+	for i in range(cantidad_procesos):#Hace una cantidad de procesos que esta definido por cantidad_procesos
+        tiempo_creacion = random.expovariate(1.0/intervalo)#Distribuci? exponencial que sigue la creaci? de procesos
+        Proceso('Proceso %d' % i, i, env, sistema_operativo)#Le pasa los valores a la clase proceso
+        yield env.timeout(tiempo_creacion)  #Tiempo en el que se tarda en aparacer cada proceso
        
 Main()
 
