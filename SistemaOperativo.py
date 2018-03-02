@@ -26,12 +26,6 @@ intervalo = 3
 #Cantidad de procesos a realizar
 cantidad_procesos = 200
 
-
-
-
-
-
-
 class SistemaOperativo:
 	def __init__ (self, env):
 		#Creamos el espacio donde se guardara
