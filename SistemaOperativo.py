@@ -16,15 +16,20 @@ cantidadRAM = 100
 #Intrucciones a realizar por unidad de tiempo
 cantidad_instrucciones = 3
 #Tiempo de operaci? I/O
-tiempoOperacion = 5
+tiempoOperacion = 0
 #Lista con los tiempos almacenados
 tiemposProcesos = []
 #Numero de proceso que se ejecutaran a la vez
 capacidad_Proceso = 2
 #Intervalo entre creaci? de procesos
-intervalo = 10
+intervalo = 3
 #Cantidad de procesos a realizar
-cantidad_procesos = 25
+cantidad_procesos = 200
+
+
+
+
+
 
 
 class SistemaOperativo:
