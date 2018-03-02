@@ -8,3 +8,6 @@ de cada uno de los procesos, y tambien la RAM. Ya que es una manera de optimizar
 el proceso de ejecución en los programas.
 
 La velocidad es clave funcionamiento de los sistema operativos.
+
+Adjunto el link:
+https://github.com/MaaarcosG/Colas_Hoja5
